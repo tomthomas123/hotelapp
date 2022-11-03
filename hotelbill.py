@@ -1,4 +1,5 @@
 import mysql.connector
+from tabulate import tabulate
 import sys
 try:
     mydb = mysql.connector.connect(host = 'localhost' , user = 'root' , password = '' , database = 'hoteldb')
@@ -72,14 +73,13 @@ while(True):
         print("view by date selected")
         ymd = input("enter the date YYYY-MM-DD : ")
         try:
-            sql = "SELECT * FROM `bills` WHERE `date`="+ymd
+            sql = "SELECT `name`, `phone`, `amount`  FROM `bills` WHERE `date`="+ymd
             mycursor.execute(sql)
             result = mycursor.fetchall()
-    
-            for i in result:
-                print(i)
+            print(tabulate(result,headers=["name","phone","amount"],tablefmt="psql"))
+                
         except mysql.connector.Error as e:
-            sys.exit("error occured in view code")
+            sys.exit(e)
     elif ch ==8:
         print("summary by date")
         ymd = input("Enter the date to get the total amount in the format YYYYMMDD : ")
@@ -87,9 +87,10 @@ while(True):
             sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date`="+ymd
             mycursor.execute(sql)
             result = mycursor.fetchall()
-            print(result)
+            print(tabulate(result,headers=["name","phone","amount"],tablefmt="psql"))
+
         except mysql.connector.Error as e:
-                sys.exit("error occured in view code")
+                sys.exit("error occured in sum by date code")
     elif ch==9:
         print("summary inbetween two days")
         ymd1 = input("enter the start date in YYYYMMDD : ")
@@ -98,8 +99,9 @@ while(True):
             sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date` BETWEEN '"+ymd1+"' AND '"+ymd2+"' "
             mycursor.execute(sql)
             result = mycursor.fetchall()
-            print(result)
+            print(tabulate(result,headers=["name","phone","amount"],tablefmt="psql"))
+
         except mysql.connector.Error as e:
-            sys.exit("error occured in view code")
+            sys.exit("error occured sum between 2 days code")
     elif(ch==10):
         break
