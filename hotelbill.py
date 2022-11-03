@@ -13,6 +13,7 @@ while(True):
     print("5 lime      :   25")
     print("6 Generate Bill")
     print("7 view all by date")
+    print("8 sum by date")
     print("10 Exit")
     ch=int(input("Enter the choice : "))
     
@@ -69,5 +70,12 @@ while(True):
         result = mycursor.fetchall()
         for i in result:
             print(i)
+    elif ch ==8:
+        print("summary by date")
+        ymd = input("Enter the date to get the total amount in the format YYYYMMDD : ")
+        sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date`="+ymd
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        print(result)
     elif(ch==10):
         break
