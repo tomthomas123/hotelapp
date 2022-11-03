@@ -1,3 +1,8 @@
+import mysql.connector
+
+mydb = mysql.connector.connect(host = 'localhost' , user = 'root' , password = '' , database = 'hoteldb')
+
+mycursor = mydb.cursor()
 li =[]
 while(True):
     print("\n please select an option")
@@ -38,6 +43,20 @@ while(True):
         li.append(total)
     elif(ch==6):
         print("Generating bill")
+        name = input('Enter the name : ')
+        phone = input('Enter the phone number : ')
+        #dates = input('Enter the date in the form of yyyy-mm-d : ')
+        
+        count = 0
+        for i in li:
+           count = count + i
+
+        amount = count
         print(total)
+        sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,now())"
+        data = (name,phone,amount)
+        mycursor.execute(sql,data)
+        mydb.commit()
+        print('Thank you!!!')
     elif(ch==7):
         break
