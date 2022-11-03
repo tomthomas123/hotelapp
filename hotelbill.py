@@ -14,6 +14,7 @@ while(True):
     print("6 Generate Bill")
     print("7 view all by date")
     print("8 sum by date")
+    print("9 summary inbetween two dates")
     print("10 Exit")
     ch=int(input("Enter the choice : "))
     
@@ -74,6 +75,14 @@ while(True):
         print("summary by date")
         ymd = input("Enter the date to get the total amount in the format YYYYMMDD : ")
         sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date`="+ymd
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        print(result)
+    elif ch==9:
+        print("summary inbetween two days")
+        ymd1 = input("enter the start date in YYYYMMDD : ")
+        ymd2 = input("enter the end date in YYYYMMDD : ")
+        sql = "SELECT SUM(`amount`) FROM `bills` WHERE `date` BETWEEN '"+ymd1+"' AND '"+ymd2+"' "
         mycursor.execute(sql)
         result = mycursor.fetchall()
         print(result)
