@@ -52,11 +52,13 @@ while(True):
            count = count + i
 
         amount = count
-        print(total)
+        
         sql = "INSERT INTO `bills`(`name`, `phone`, `amount`, `date`) VALUES (%s,%s,%s,now())"
         data = (name,phone,amount)
         mycursor.execute(sql,data)
         mydb.commit()
+        print(name)
+        print(total)
         print('Thank you!!!')
     elif(ch==7):
         break
